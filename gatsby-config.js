@@ -40,7 +40,7 @@ module.exports = {
           },
           {
             title: `CTF Writeups`,
-            slug: `/ctf`,
+            slug: `/ctf-writeups`,
           },
         ],
         externalLinks: [
