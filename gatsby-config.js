@@ -29,6 +29,10 @@ module.exports = {
             slug: `/hackerschool`,
           },
           {
+            title: `FRIENDS - IPFN`,
+            slug: `/friends-ipfn`,
+          },
+          {
             title: `CTF`,
             slug: `/CTF`,
           },
@@ -39,8 +43,8 @@ module.exports = {
             url: `https://www.linkedin.com/in/francisco-fonseca-2309331b6`,
           },
           {
-            name: `Homepage`,
-            url: `https://www.lekoarts.de?utm_source=minimal-blog&utm_medium=Starter`,
+            name: `Github`,
+            url: `https://github.com/franfrancisco9`,
           },
         ],
       },
