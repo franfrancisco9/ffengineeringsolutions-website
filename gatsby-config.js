@@ -17,18 +17,26 @@ module.exports = {
       options: {
         navigation: [
           {
-            title: `Blog`,
-            slug: `/blog`,
-          },
-          {
             title: `About`,
             slug: `/about`,
+          },
+          {
+            title: `AeroTec`,
+            slug: `/aerotec`,
+          },
+          {
+            title: `HackerSchool`,
+            slug: `/hackerschool`,
+          },
+          {
+            title: `CTF`,
+            slug: `/CTF`,
           },
         ],
         externalLinks: [
           {
-            name: `Twitter`,
-            url: `https://twitter.com/lekoarts_de`,
+            name: `Linkedin`,
+            url: `https://www.linkedin.com/in/francisco-fonseca-2309331b6`,
           },
           {
             name: `Homepage`,
