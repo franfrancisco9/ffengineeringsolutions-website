@@ -27,7 +27,7 @@ module.exports = {
             slug: `/about`,
           },
           {
-            title: `AeroTec`,
+            title: `AeroTéc`,
             slug: `/aerotec`,
           },
           {
@@ -35,11 +35,11 @@ module.exports = {
             slug: `/hackerschool`,
           },
           {
-            title: `FRIENDS - IPFN`,
+            title: `FRIENDS IPFN`,
             slug: `/friends-ipfn`,
           },
           {
-            title: `CTF`,
+            title: `CTF Writeups`,
             slug: `/ctf`,
           },
         ],
