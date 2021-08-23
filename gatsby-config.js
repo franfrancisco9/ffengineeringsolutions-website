@@ -11,7 +11,7 @@ module.exports = {
     siteTitle: `Francisco Fonseca`,
     siteTitleAlt: `Francisco Fonseca`,
     siteHeadline: `Francisco Fonseca - Gatsby Theme from @lekoarts`,
-    siteUrl: `https://minimal-blog.lekoarts.de`,
+    siteUrl: `https://www.ffengineeringsolutions.com`,
     siteDescription: `Personal website of Francisco Fonseca`,
     siteLanguage: `en`,
     siteTitleAlt: `Francisco Fonseca`,
