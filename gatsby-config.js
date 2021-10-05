@@ -28,7 +28,7 @@ module.exports = {
           },
           {
             title: `AeroTéc`,
-            slug: `/aerotec`,
+            url: `https://www.ffengineeringsolutions.com/tags/aero-tec`,
           },
           {
             title: `HackerSchool`,
