@@ -33,15 +33,15 @@ module.exports = {
           },
           {
             title: `HackerSchool`,
-            slug: `/hackerschool`,
+            slug: `/tags/hacker-school`,
           },
           {
             title: `FRIENDS IPFN`,
-            slug: `/friends-ipfn`,
+            slug: `/tags/friends`,
           },
           {
             title: `CTF Writeups`,
-            slug: `/ctf-writeups`,
+            slug: `/tags/ctf`,
           },
         ],
         externalLinks: [
