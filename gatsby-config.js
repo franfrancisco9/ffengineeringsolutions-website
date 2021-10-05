@@ -15,6 +15,7 @@ module.exports = {
     siteDescription: `Personal website of Francisco Fonseca`,
     siteLanguage: `en`,
     siteTitleAlt: `Francisco Fonseca`,
+    siteImage: `/FF.jpg`,
   },
   plugins: [
     {
