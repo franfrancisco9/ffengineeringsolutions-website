@@ -92,12 +92,12 @@ module.exports = {
         display: `standalone`,
         icons: [
           {
-            src: `/FF-192_x_192.jpg`,
+            src: `/static/FF-192_x_192.jpg`,
             sizes: `192x192`,
             type: `image/jpg`,
           },
           {
-            src: `/FF-512_x_512.jpg`,
+            src: `/static/FF-512_x_512.jpg`,
             sizes: `512x512`,
             type: `image/jpg`,
           },
