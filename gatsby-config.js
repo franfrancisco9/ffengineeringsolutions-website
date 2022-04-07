@@ -92,23 +92,13 @@ module.exports = {
         display: `standalone`,
         icons: [
           {
-            src: `./static/favicon-192_x_192.png`,
+            src: `/android-chrome-192x192.png`,
             sizes: `192x192`,
             type: `image/png`,
           },
           {
-            src: `./static/favicon-512_x_512.png`,
+            src: `/android-chrome-512x512.png`,
             sizes: `512x512`,
-            type: `image/png`,
-          },
-          {
-            src: `./static/favicon-16_x_16.png`,
-            sizes: `16x16`,
-            type: `image/png`,
-          },
-          {
-            src: `./static/favicon-32_x_32.png`,
-            sizes: `32x32`,
             type: `image/png`,
           },
         ],
