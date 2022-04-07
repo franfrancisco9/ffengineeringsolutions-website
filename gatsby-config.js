@@ -101,6 +101,16 @@ module.exports = {
             sizes: `512x512`,
             type: `image/jpg`,
           },
+          {
+            src: `/static/FF-16_x_16.jpg`,
+            sizes: `16x16`,
+            type: `image/jpg`,
+          },
+          {
+            src: `/static/FF-32_x_32.jpg`,
+            sizes: `32x32`,
+            type: `image/jpg`,
+          },
         ],
       },
     },
