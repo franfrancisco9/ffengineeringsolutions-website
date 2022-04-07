@@ -92,24 +92,24 @@ module.exports = {
         display: `standalone`,
         icons: [
           {
-            src: `/static/FF-192_x_192.jpg`,
+            src: `/static/favicon-192_x_192.png`,
             sizes: `192x192`,
-            type: `image/jpg`,
+            type: `image/png`,
           },
           {
-            src: `/static/FF-512_x_512.jpg`,
+            src: `/static/favicon-512_x_512.png`,
             sizes: `512x512`,
-            type: `image/jpg`,
+            type: `image/png`,
           },
           {
-            src: `/static/FF-16_x_16.jpg`,
+            src: `/static/favicon-16_x_16.png`,
             sizes: `16x16`,
-            type: `image/jpg`,
+            type: `image/png`,
           },
           {
-            src: `/static/FF-32_x_32.jpg`,
+            src: `/static/favicon-32_x_32.png`,
             sizes: `32x32`,
-            type: `image/jpg`,
+            type: `image/png`,
           },
         ],
       },
