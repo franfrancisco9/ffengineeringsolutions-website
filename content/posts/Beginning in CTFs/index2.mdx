@@ -1,0 +1,125 @@
+---
+title: Tutorial Borda Fora
+date: 2022-04-21
+slug: "/CTF/borda_fora"
+tags:
+  - CTF
+  - Tutorial
+---
+## Borda Fora Guide
+This guide is serves as a tutorial for a challenge part of HackerSchoolCTF hosted at Instituo Superior Técnico and it aims to teach the basics of pwn exploitation.
+Adjusted and translated from [here](https://github.com/idekctf/idekctf.github.io/blob/main/Resources/re2win.md) with the author's permission.
+
+### Introdução
+- Em cada máquina o código C é compilado (x64 neste caso).
+- Em C, as variáveis devem ser especificadas antes, o que significa que é preciso declarar o tipo e o tamanho da variável.
+- Em C, as variáveis são endereçadas na memória, então não há nada para verificar os tamanhos (isso significa que o programador deve ser o responsável de verificar).
+- As variáveis declaradas localmente são armazenadas no `stack` , uma parte especial da memória.
+- Após a função terminar o código, o endereço de retorno também é armazenado no `stack`.
+- Quando a função é chamada, o `stack frame` é criado.
+- Exemplo:
+```c
+int main(){
+int foo = 0x1337;
+int bar = 0xdeadbeef;
+}
+```
+- Stack podia ter o seguinte aspeto:
+```
+0xdeadbeef       <---- bar
+0x1337           <---- foo 
+RANDOM           <---- Base pointer RBP
+0xcafebabe       <---- Return address
+```
+## Exploração
+- As variáveis declaradas pela primeira vez estão mais próximas do endereço de retorno; isso ocorre porque o `stack` cresce para cima.
+- Depois de a função chegar ao fim, tem de voltar ao sítio de onde foi chamada (neste caso, é libc, mas vamos ignorar por enquanto) executando o código no endereço de retorno.
+- Isso significa que, se pudermos substituir esse endereço, poderemos redirecionar a execução para qualquer coisa, como outra função
+- Um ret2win é uma versão muito básica deste exploit.
+- Imaginemos que existe uma função win, que não seria chamada em circunstâncias normais. Vmoas forçar a que isso aconteça!
+- Por exemplo, se pudéssemos escrever por cima do `stack` A's (em hexadecimal A é 0x41), teríamos o seguinte `stack`:
+```
+0x4141414141414141   <---- bar
+0x4141414141414141   <---- foo 
+0x4141414141414141   <---- Base pointer RBP
+0x4141414141414141   <---- Return address
+```
+- Após a execução da função, ela fará uma instrução ret que moverá o endereço de retorno para o ponteiro da instrução, executando assim o que quer que tenhamos colocado lá
+
+## Como descobrir o offset?
+- Depois de confirmar que temos buffer overflow, é preciso encontrar o tamanho certo para substituir antes que o endereço de retorno seja atingido, pois escrever demais pode causar um `Segmentation fault` (o que significa que se tentou aceder a dados inexistentes).
+- Os dois métodos principais são estáticos ou dinâmicos, aqui está um breve guia para ambos:
+### Estáticos
+- O ponteiro retornado é armazenado 8 bytes após o ponteiro base, portanto, está em RBP+0x8.
+- Observando um disassembly vemos que foo está em RBP-0x8, isso significa que estamos a 16 bytes do endereço de retorno
+- Assim enviando 16 bytes e depois o endereço de retorno deve colocá-lo corretamente
+```
+Dump of assembler code for function main:
+   0x0000000000401126 <+0>:     push   rbp
+   0x0000000000401127 <+1>:     mov    rbp,rsp
+   0x000000000040112a <+4>:     sub    rsp,0x10
+   0x000000000040112e <+8>:     mov    DWORD PTR [rbp-0x8],0x1337     <----rbp-0x8
+   0x0000000000401135 <+15>:    mov    DWORD PTR [rbp-0x4],0xdeadbeef
+   0x000000000040113c <+22>:    lea    rax,[rbp-0x8]
+   0x0000000000401140 <+26>:    mov    rdi,rax
+   0x0000000000401143 <+29>:    mov    eax,0x0
+   0x0000000000401148 <+34>:    call   0x401030 <gets@plt>
+   0x000000000040114d <+39>:    mov    eax,0x0
+   0x0000000000401152 <+44>:    leave
+   0x0000000000401153 <+45>:    ret
+```
+
+
+### Dinâmicos
+- Em vez de olhar para o código-fonte e fazer spam de caracteres podemos user um debugger
+- Um debugger como o `gdb` torna mais fácil entender o que está a acontecer (Usando o plugin gef)
+- Usando algo como pwn cyclic para gerar uma string identificável, podemos apenas enviá-la e esperar que ocorra uma falha
+- Usando o quadro de informações, podemos obter o endereço exato da falha(`RIP`) e examinar qual é o seu offset
+- Assim odemos encontrar a quantidade de bytes que precisamos substituir
+
+
+```
+ ~/ctf/hsctf/test >> gdb foo
+Reading symbols from foo...
+gef➤  pattern create 100   
+[+] Generating a pattern of 100 bytes (n=4)  # Creating a pattern
+aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa
+[+] Saved as '$_gef0'
+gef➤  run
+Starting program: /home/franfrancisco9/ctf/hsctf/test/foo   # Run and send pattern
+aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa
+
+Program received signal SIGSEGV, Segmentation fault.  # CRASHED
+0x0000000000401153 in main () at foo.c:7
+     0x401148 <main+34>        call   0x401030 <gets@plt>
+     0x40114d <main+39>        mov    eax, 0x0
+     0x401152 <main+44>        leave
+ →   0x401153 <main+45>        ret
+[!] Cannot disassemble from $PC
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────── source:foo.c+7 ────
+      2  int foo = 0x1337;
+      3  int bar = 0xdeadbeef;
+      4  gets(&foo);
+      5  return 0;
+      6
+ →    7  }
+      8
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+gef➤  info frame
+Stack level 0, frame at 0x7fffffffdbb0:
+ rip = 0x401153 in main (foo.c:7); saved rip = 0x6161616661616165
+ source language c.
+ Arglist at 0x6161616461616163, args:
+ Locals at 0x6161616461616163, Previous frame's sp is 0x7fffffffdbb0
+ Saved registers:
+  rbp at 0x7fffffffdba0, rip at 0x7fffffffdba8
+gef➤  x/gx 0x7fffffffdba8
+0x7fffffffdba8: 0x6161616661616165
+gef➤  pattern search 0x6161616661616165     # Search for pattern that is in RIP now
+[+] Searching for '0x6161616661616165'
+[+] Found at offset 16 (little-endian search) likely
+```
+
+Agora é aplicar estes conhecimentos ao desafio Borda Fora!
+
+Sendo um desafio Tutorial é permitido mandar mensagem a um admin!
