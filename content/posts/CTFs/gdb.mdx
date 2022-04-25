@@ -1,0 +1,50 @@
+---
+title: Tutorial Introdução GDB
+date:  2022-04-25
+slug: "/CTF/introdução_gdb"
+tags:
+  - CTF
+  - Tutorial  
+---
+## Introdução GDB Guide
+This guide is serves as a tutorial for a challenge part of HackerSchoolCTF hosted at Instituto Superior Técnico and it aims to teach the basics of reverse engineering.
+
+### O que é análise dinâmica?
+> A análise dinâmica é um tipo de análise que requer a execução ao vivo do código. 
+> Se, por exemplo, encontrarmos um código que descriptografa ou descompacta uma grande quantidade de dados e se 
+> quisermos ver o conteúdo dos dados descodificados, a opção mais rápida seria fazer uma análise dinâmica. 
+> Podemos executar uma sessão de debug e ver em detalhe essa área do código ser executada para nós.
+
+### O que é GDB?
+> GDB (GNU DeBugger) é Linux debugger builtin na framework GNU, basicamente tudo que o Linux usa. 
+> Permite que o reverser percorra um programa e analise o funcionamento interno desse programa em tempo real de execução. 
+> Recursos mais avançados incluídos no GEF e noutras extensões permitem uma visão mais abrangente do binário.
+
+### Como é que os computadores executam um binário?
+> Os computadores usam algo chamado **stack** para armazenar informações enquanto um programa está a ser executado, **pushing** e **popping** valores da parte superior.
+> Esse tipo de memória é diferente da memória no disco rígido/SSD, pois a pilha usa armazenamentos de dados conhecidos como **registos**, 
+> que podem armazenar 4 bytes num sistema de 32 bits e 8 bytes bum sistema de 64 bits (EAX vs. RAX).
+> Esses registos interagem com a RAM (Random Access Memory) usando **ponteiros** de endereço de memória e constituem os principais componentes da 
+> CPU (unidade central de processamento).
+
+### Como é que uso o GDB?
+> Instalar o GDB: O GDB devia estar embutido em qualquer imagem do Linux, mas se não estando em Linux, basta utilizar uma 
+> virtual machine, ou o ubuntu do windows (wsl).
+> O GDB "desmonta" um binário compilado em **Assembly**, uma linguagem de codificação baseada em **opcodes** e **operadores** simples, 
+> um pouco (muito) diferente do que as pessoas tradicionalmente consideram uma "linguagem de codificação" , C, Python, Java, etc. 
+> Um guia rápido para Assembly pode ser encontrado [aqui](https://medium.com/reverse-engineering-for-dummies/a-crash-course-in-assembly-language- 695b07995b4d). 
+> O GDB usa **stepping** para mover através de um binário ativo e permite que o reverser visualize todos os componentes móveis e seus valores, tais como: 
+> registos e locais de memória. 
+> Um ótimo tutorial para usar o GDB pode ser encontrado [aqui](https://www.youtube.com/watch?v=svG6OPyKsrw&t=2s), que embora seja um pouco longo, é muito útil
+> (pode-se sempre ver a velocidade x2 ;)) ou [ este artigo](http://www.cs.toronto.edu/~krueger/csc209h/tut/gdb_tutorial.html).
+
+### Exemplos:
+> [Bomb Labs write-up](http://zpalexander.com/binary-bomb-lab-set-up/)
+
+> [String compare write-up](https://github.com/HackThisSite/CTF-Writeups/blob/master/2016/SCTF/rev1/README.md)
+
+> [Crackmes write-up](https://infosecwriteups.com/tryhackme-reversing-elf-writeup-6fd006704148)
+
+### Ajuda
+> Se ainda está difícil chegar à flag, o melhor é tentar pesquisar no Google outros exemplos para entender melhor a teoria.
+> Se mesmo assim ainda estiveres preso/a, envia um ticket através do bot do Discord Modmail. 
