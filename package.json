@@ -23,7 +23,7 @@
     "gatsby-plugin-gatsby-cloud": "^2.6.1",
     "gatsby-plugin-google-analytics": "^3.6.0",
     "gatsby-plugin-manifest": "^3.6.0",
-    "gatsby-plugin-netlify": "^3.6.1",
+    "gatsby-plugin-netlify": "^4.2.0",
     "gatsby-plugin-offline": "^4.6.0",
     "gatsby-plugin-sitemap": "^4.2.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.22",
